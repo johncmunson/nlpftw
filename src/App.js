@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
-import Table from './Table.js'
+import NLPWidget from './containers/NLPWidget.js'
 
-class App extends Component {
-    render() {
-        return (
-            <Table textinput='the quick brown fox jumped over the lazy dog'/>
-        );
-    }
-}
+const App = () => (
+    <NLPWidget />
+)
 
 export default App;
