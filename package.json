@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://johncmunson.github.io/nlpftw",
   "devDependencies": {
+    "gh-pages": "^0.12.0",
     "react-scripts": "0.9.3"
   },
   "dependencies": {
