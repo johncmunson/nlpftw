@@ -5,8 +5,12 @@ const OptionsGroup = (props) => (
         <b>{props.data.category}</b>
         {props.data.options.map((o, i) => (
             <label key={i}>
-                <input type='checkbox' />
-                {o}
+                <input
+                    onClick={() => props.handleOptionClick(o.id)}
+                    type='checkbox'
+                    checked={props.activeOptions[o.id] === true ? 'checked' : null}
+                />
+                {o.name}
             </label>
         ))}
     </div>
