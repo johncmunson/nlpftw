@@ -10,12 +10,12 @@ class NLPWidget extends React.Component {
     render() {
         return (
             <div>
+                <NLPInput {...this.props} />
                 <Tabs
                     tabs={this.props.tabs}
                     activeTabId={this.props.activeTabId}
                     handleTabClick={this.props.handleTabClick}
                 />
-                <NLPInput {...this.props} />
                 <NLPTable {...this.props} />
             </div>
         )
