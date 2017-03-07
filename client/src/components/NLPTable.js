@@ -4,9 +4,9 @@ const NLPTable = (props) => (
     <table>
         <tbody>
             <tr>
-                {props.terms.map(term => (
-                    <td>
-                        {term}
+                {props.terms.map((t, i) => (
+                    <td key={i}>
+                        {t}
                     </td>
                 ))}
             </tr>

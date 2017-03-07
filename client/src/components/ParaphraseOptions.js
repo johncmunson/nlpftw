@@ -1,96 +1,26 @@
 import React from 'react'
+import OptionsGroup from './OptionsGroup.js'
+
+const data = [
+    {
+        category: 'Clausal Paraphrase',
+        options: ['Independent Clause &#8594; New Sentence', 'New Sentence &#8594; Independent Clause', 'Possessive &#8594; "has a"', '"has a" &#8594; Possessive', '']
+    },
+    {
+        category: 'Syntactic Paraphrase',
+        options: ['to Pronoun', 'to Active Voice', 'to Passive Voice', 'to Contraction', 'from Contraction', 'to Gerund Chunk', 'from Gerund Chunk', 'to Cleft', 'from Cleft', 'ADV &#8594; ADVCL', 'ADVCL &#8594; ADV']
+    },
+    {
+        category: 'Semantic Paraphrase',
+        options: ['Swap Synonym', '"not" Antonym', 'to Hyponym', 'to Meronym', 'Reduce Compound Modifier']
+    }
+]
 
 const ParaphraseOptions = (props) => (
     <div>
-        <div>
-            <b>Clausal Paraphrase:</b>
-            <label>
-                <input type='checkbox' />
-                Independent Clause &#8594; New Sentence
-            </label>
-            <label>
-                <input type='checkbox' />
-                New Sentence &#8594; Independent Clause
-            </label>
-            <label>
-                <input type='checkbox' />
-                Possessive &#8594; "has a"
-            </label>
-            <label>
-                <input type='checkbox' />
-                "has a" &#8594; Possessive
-            </label>
-        </div>
-        <div>
-            <b>Syntactic Paraphrase:</b>
-            <label>
-                <input type='checkbox' />
-                to Pronoun
-            </label>
-            <label>
-                <input type='checkbox' />
-                to Active Voice
-            </label>
-            <label>
-                <input type='checkbox' />
-                to Passive Voice
-            </label>
-            <label>
-                <input type='checkbox' />
-                to Contraction
-            </label>
-            <label>
-                <input type='checkbox' />
-                from Contraction
-            </label>
-            <label>
-                <input type='checkbox' />
-                to Gerund Chunk
-            </label>
-            <label>
-                <input type='checkbox' />
-                from Gerund Chunk
-            </label>
-            <label>
-                <input type='checkbox' />
-                from Cleft
-            </label>
-            <label>
-                <input type='checkbox' />
-                to Cleft
-            </label>
-            <label>
-                <input type='checkbox' />
-                ADV &#8594; ADVCL
-            </label>
-            <label>
-                <input type='checkbox' />
-                ADVCL &#8594; ADV
-            </label>
-        </div>
-        <div>
-            <b>Semantic Paraphrase:</b>
-            <label>
-                <input type='checkbox' />
-                Swap Synonym
-            </label>
-            <label>
-                <input type='checkbox' />
-                "not" Antonym
-            </label>
-            <label>
-                <input type='checkbox' />
-                to Hyponym
-            </label>
-            <label>
-                <input type='checkbox' />
-                to Meronym
-            </label>
-            <label>
-                <input type='checkbox' />
-                Reduce Compound Modifier
-            </label>
-        </div>
+        {data.map((d, i) => (
+            <OptionsGroup data={d} key={i} />
+        ))}
     </div>
 )
 

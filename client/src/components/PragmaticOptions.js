@@ -1,16 +1,18 @@
 import React from 'react'
+import OptionsGroup from './OptionsGroup.js'
+
+const data = [
+    {
+        category: 'Pragmatic Models',
+        options: ['P-Pronoun', 'P-Determiner']
+    }
+]
 
 const PragmaticOptions = (props) => (
     <div>
-        <b>Pragmatic Models:</b>
-        <label>
-            <input type='checkbox' />
-            P-Pronoun
-        </label>
-        <label>
-            <input type='checkbox' />
-            P-Determiner
-        </label>
+        {data.map((d, i) => (
+            <OptionsGroup data={d} key={i} />
+        ))}
     </div>
 )
 

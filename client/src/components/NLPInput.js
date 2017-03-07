@@ -1,14 +1,22 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const Textarea = styled.textarea`
+    width: 380px;
+    height: 50px;
+`
 
 const NLPInput = (props) => {
     let input
     return (
-        <textarea
-            ref={node => input = node}
-            onChange={() => props.handleContentChange(input.value)}
-            type="text"
-        >
-        </textarea>
+        <div>
+            <Textarea
+                innerRef={node => input = node}
+                type="text"
+            >
+            </Textarea>
+            <button onClick={() => props.handleTextSubmit(input.value)}>Analyze</button>
+        </div>
     )
 }
 

@@ -32,7 +32,7 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => (
     {
-        handleContentChange: (content) => {
+        handleTextSubmit: (content) => {
             dispatch(updateTerms(content))
         },
         handleTabClick: (id) => {
