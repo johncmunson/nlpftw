@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux'
-import termsReducer from './termsReducer.js'
+import analysisReducer from './analysisReducer.js'
+import requestingAnalysisReducer from './requestingAnalysisReducer.js'
+import analysisErrorReducer from './analysisErrorReducer.js'
 import tabsReducer from './tabsReducer.js'
 import activeTabIdReducer from './activeTabIdReducer.js'
 import activeSyntaxOptionsReducer from './activeSyntaxOptionsReducer.js'
@@ -7,7 +9,9 @@ import activePragmaticOptionsReducer from './activePragmaticOptionsReducer.js'
 import activeParaphraseOptionsReducer from './activeParaphraseOptionsReducer.js'
 
 const rootReducer = combineReducers({
-    terms: termsReducer,
+    analysis: analysisReducer,
+    requestingAnalysis: requestingAnalysisReducer,
+    analysisError: analysisErrorReducer,
     tabs: tabsReducer,
     activeTabId: activeTabIdReducer,
     activeSyntaxOptions: activeSyntaxOptionsReducer,

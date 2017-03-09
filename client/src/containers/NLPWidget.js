@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import NLPTable from '../components/NLPTable.js'
 import NLPInput from '../components/NLPInput.js'
 import Tabs from '../components/Tabs.js'
-import updateTerms from '../actions/updateTerms.js'
+import analyzeContent from '../actions/analyzeContent.js'
 import updateActiveTabId from '../actions/updateActiveTabId.js'
 
 class NLPWidget extends React.Component {
@@ -24,7 +24,7 @@ class NLPWidget extends React.Component {
 
 const mapStateToProps = (state) => (
     {
-        terms: state.terms,
+        analysis: state.analysis,
         tabs: state.tabs,
         activeTabId: state.activeTabId
     }
@@ -32,8 +32,8 @@ const mapStateToProps = (state) => (
 
 const mapDispatchToProps = (dispatch) => (
     {
-        handleTextSubmit: (content) => {
-            dispatch(updateTerms(content))
+        handleButtonClick: (content) => {
+            dispatch(analyzeContent(content))
         },
         handleTabClick: (id) => {
             dispatch(updateActiveTabId(id))

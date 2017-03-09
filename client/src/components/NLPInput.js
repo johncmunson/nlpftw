@@ -15,7 +15,7 @@ const NLPInput = (props) => {
                 type="text"
             >
             </Textarea>
-            <button onClick={() => props.handleTextSubmit(input.value)}>Analyze</button>
+            <button onClick={() => props.handleButtonClick(input.value)}>Analyze</button>
         </div>
     )
 }
