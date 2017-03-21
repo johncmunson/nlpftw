@@ -20,7 +20,7 @@ const Tabs = ({ tabs, activeTabId, handleTabClick }) => (
                 </Tab>
             ))}
         </div>
-        {tabs.map(t => t.id === activeTabId ? t.component : null)}
+        {tabs.map(t => t.id === activeTabId ? <t.component /> : null)}
     </div>
 );
 
