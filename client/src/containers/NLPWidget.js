@@ -16,7 +16,11 @@ class NLPWidget extends React.Component {
                     activeTabId={this.props.activeTabId}
                     handleTabClick={this.props.handleTabClick}
                 />
-                <NLPTable {...this.props} />
+                {this.props.requestingAnalysis ? (
+                    'requesting analysis...'
+                ) : (
+                    <NLPTable {...this.props} />
+                )}
             </div>
         )
     }
@@ -26,7 +30,8 @@ const mapStateToProps = (state) => (
     {
         analysis: state.analysis,
         tabs: state.tabs,
-        activeTabId: state.activeTabId
+        activeTabId: state.activeTabId,
+        requestingAnalysis: state.requestingAnalysis
     }
 )
 
