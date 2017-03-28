@@ -1,18 +1,12 @@
 import React from 'react'
 import OptionsGroup from './OptionsGroup.js'
-
-const data = [
-    {
-        category: 'Pragmatic Models',
-        options: [{name: 'P-Pronoun', id: '21'}, {name: 'P-Determiner', id: '22'}]
-    }
-]
+import options from './constants/pragmaticOptionsConstants.js'
 
 const PragmaticOptions = (props) => (
     <div>
-        {data.map((d, i) => (
+        {options.map((o, i) => (
             <OptionsGroup
-                data={d}
+                data={o}
                 key={i}
                 handleOptionClick={props.handleOptionClick}
                 activeOptions={props.activePragmaticOptions}

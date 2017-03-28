@@ -1,6 +1,6 @@
 export default function updatePragmaticOptions(id) {
     return {
-        type: 'UPDATE_PRAGMATIC_OPTIONS',
+        type: 'UPDATE_ACTIVE_PRAGMATIC_OPTIONS',
         id
     }
 }

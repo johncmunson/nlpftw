@@ -1,28 +1,15 @@
-export default function activeParaphraseOptionsReducer(state = {
-    '1': false,
-    '2': false,
-    '3': false,
-    '4': false,
-    '5': false,
-    '6': false,
-    '7': false,
-    '8': false,
-    '9': false,
-    '10': false,
-    '11': false,
-    '12': false,
-    '13': false,
-    '14': false,
-    '15': false,
-    '16': false,
-    '17': false,
-    '18': false,
-    '19': false,
-    '20': false
-}, action) {
+export default function activeParaphraseOptionsReducer(state = [], action) {
     switch (action.type) {
-        case 'UPDATE_PARAPHRASE_OPTIONS': {
-            return {...state, [action.id]: !state[action.id]}
+        case 'UPDATE_ACTIVE_PARAPHRASE_OPTIONS': {
+            const newState = [...state]
+            if (state.includes(action.id)) {
+                const index = state.findIndex(id => id === action.id)
+                newState.splice(index, 1)
+                return newState
+            } else {
+                newState.push(action.id)
+                return newState
+            }
         }
         default: {
             return state

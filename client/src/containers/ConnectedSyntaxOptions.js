@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import SyntaxOptions from '../components/SyntaxOptions.js'
-import updateSyntaxOptions from '../actions/updateSyntaxOptions.js'
+import updateActiveSyntaxOptions from '../actions/updateActiveSyntaxOptions.js'
 
 const mapStateToProps = (state) => (
     {
@@ -11,7 +11,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
     {
         handleOptionClick: (id) => {
-            dispatch(updateSyntaxOptions(id))
+            dispatch(updateActiveSyntaxOptions(id))
         }
     }
 )

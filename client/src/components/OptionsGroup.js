@@ -6,9 +6,9 @@ const OptionsGroup = (props) => (
         {props.data.options.map((o, i) => (
             <label key={i}>
                 <input
-                    onClick={() => props.handleOptionClick(o.id)}
+                    onChange={() => props.handleOptionClick(o.id)}
                     type='checkbox'
-                    checked={props.activeOptions[o.id] === true ? 'checked' : null}
+                    checked={props.activeOptions.includes(o.id) === true ? 'checked' : null}
                 />
                 {o.name}
             </label>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ParaphraseOptions from '../components/ParaphraseOptions.js'
-import updateParaphraseOptions from '../actions/updateParaphraseOptions.js'
+import updateActiveParaphraseOptions from '../actions/updateActiveParaphraseOptions.js'
 
 const mapStateToProps = (state) => (
     {
@@ -11,7 +11,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
     {
         handleOptionClick: (id) => {
-            dispatch(updateParaphraseOptions(id))
+            dispatch(updateActiveParaphraseOptions(id))
         }
     }
 )

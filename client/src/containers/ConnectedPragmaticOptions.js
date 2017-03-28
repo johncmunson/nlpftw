@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import PragmaticOptions from '../components/PragmaticOptions.js'
-import updatePragmaticOptions from '../actions/updatePragmaticOptions.js'
+import updateActivePragmaticOptions from '../actions/updateActivePragmaticOptions.js'
 
 const mapStateToProps = (state) => (
     {
@@ -11,7 +11,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = (dispatch) => (
     {
         handleOptionClick: (id) => {
-            dispatch(updatePragmaticOptions(id))
+            dispatch(updateActivePragmaticOptions(id))
         }
     }
 )

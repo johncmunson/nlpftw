@@ -1,6 +1,7 @@
-export default function receiveAnalysis(analysis) {
+export default function receiveAnalysis(google, github) {
     return {
         type: 'RECEIVE_ANALYSIS',
-        analysis
+        google,
+        github
     }
 }
