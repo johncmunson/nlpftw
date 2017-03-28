@@ -4,10 +4,12 @@ const options = [
         options: [
             {
                 name: 'P-Pronoun',
-                id: '21'
+                id: '21',
+                disabled: true
             }, {
                 name: 'P-Determiner',
-                id: '22'
+                id: '22',
+                disabled: true
             }
         ]
     }

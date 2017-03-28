@@ -4,11 +4,15 @@ const OptionsGroup = (props) => (
     <div>
         <b>{props.data.category}</b>
         {props.data.options.map((o, i) => (
-            <label key={i}>
+            <label
+                key={i}
+                style={o.disabled ? {color: 'grey'} : {color: 'black'}}
+            >
                 <input
-                    onChange={() => props.handleOptionClick(o.id)}
+                    onClick={() => props.handleOptionClick(o.id)}
                     type='checkbox'
                     checked={props.activeOptions.includes(o.id) === true ? 'checked' : null}
+                    disabled={o.disabled ? 'disabled' : false}
                 />
                 {o.name}
             </label>

@@ -4,7 +4,8 @@ const options = [
         options: [
             {
                 name: 'Snip Sentence',
-                id: '23'
+                id: '23',
+                disabled: true
             }, {
                 name: 'Show Tokens',
                 id: '24'
@@ -13,13 +14,15 @@ const options = [
                 id: '25'
             }, {
                 name: 'Shallow Parse Chunker',
-                id: '26'
+                id: '26',
+                disabled: true
             }, {
                 name: 'Grammar/Dependency Parse',
                 id: '27'
             }, {
                 name: 'Propositions',
-                id: '28'
+                id: '28',
+                disabled: true
             }
         ]
     }, {
@@ -27,19 +30,24 @@ const options = [
         options: [
             {
                 name: 'Lemma',
-                id: '29'
+                id: '29',
+                disabled: true
             }, {
                 name: 'Stem',
-                id: '30'
+                id: '30',
+                disabled: true
             }, {
                 name: 'Named Entities',
-                id: '31'
+                id: '31',
+                disabled: true
             }, {
                 name: 'Quantities',
-                id: '32'
+                id: '32',
+                disabled: true
             }, {
                 name: 'Coreference',
-                id: '33'
+                id: '33',
+                disabled: true
             }
         ]
     }, {
@@ -47,28 +55,36 @@ const options = [
         options: [
             {
                 name: 'Word Sense',
-                id: '34'
+                id: '34',
+                disabled: true
             }, {
                 name: 'Hyponyms',
-                id: '35'
+                id: '35',
+                disabled: true
             }, {
                 name: 'Hypernyms',
-                id: '36'
+                id: '36',
+                disabled: true
             }, {
                 name: 'Meronyms',
-                id: '37'
+                id: '37',
+                disabled: true
             }, {
                 name: 'Holonyms',
-                id: '38'
+                id: '38',
+                disabled: true
             }, {
                 name: 'Synonyms',
-                id: '39'
+                id: '39',
+                disabled: true
             }, {
                 name: 'Antonyms',
-                id: '40'
+                id: '40',
+                disabled: true
             }, {
                 name: 'Verb Frames',
-                id: '41'
+                id: '41',
+                disabled: true
             }
         ]
     }, {
@@ -76,19 +92,24 @@ const options = [
         options: [
             {
                 name: '2-Gram',
-                id: '42'
+                id: '42',
+                disabled: true
             }, {
                 name: '3-Gram',
-                id: '43'
+                id: '43',
+                disabled: true
             }, {
                 name: '4-Gram',
-                id: '44'
+                id: '44',
+                disabled: true
             }, {
                 name: '5-Gram',
-                id: '45'
+                id: '45',
+                disabled: true
             }, {
                 name: 'Hyper2-Gram',
-                id: '46'
+                id: '46',
+                disabled: true
             }
         ]
     }
