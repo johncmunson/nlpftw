@@ -3,6 +3,7 @@ export default function analysisReducer(state = {}, action) {
         case 'RECEIVE_ANALYSIS': {
             return {
                 google: action.google,
+                namedEntities: action.namedEntities,
                 github: action.github
             }
         }

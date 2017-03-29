@@ -11,6 +11,13 @@ function fetchGoogleAnalysis(content) {
     })
 }
 
+function fetchNamedEntities(content) {
+    return axios({
+        method: 'get',
+        url: `http://www.langbench.com:8080/Apache/1.7.2/NounDetect?action=locate&text=${content}`,
+    })
+}
+
 function fetchGithubAnalysis() {
     return axios({
         method: 'get',
@@ -24,11 +31,12 @@ export default function analyzeContent(content) {
         // Make requests concurrently
         axios.all([
             fetchGoogleAnalysis(content),
+            fetchNamedEntities(content),
             fetchGithubAnalysis()
         ])
             // All requests are now complete
-            .then(axios.spread(function(google, github) {
-                dispatch(receiveAnalysis(google, github))
+            .then(axios.spread(function(google, namedEntities, github) {
+                dispatch(receiveAnalysis(google, namedEntities, github))
             }))
             .catch(err => dispatch(analysisError(err)))
     }

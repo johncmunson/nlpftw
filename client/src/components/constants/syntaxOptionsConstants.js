@@ -39,7 +39,6 @@ const options = [
             }, {
                 name: 'Named Entities',
                 id: '31',
-                disabled: true
             }, {
                 name: 'Quantities',
                 id: '32',

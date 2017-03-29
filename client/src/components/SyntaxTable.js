@@ -92,11 +92,17 @@ const renderRow = {
     },
     // Named Entities
     31: function(analysis) {
+        const namedEntities = analysis.google.data[1].tokens.map(t => '-')
+        analysis.namedEntities.data.results.map(e => {
+            const index = analysis.google.data[1].tokens.findIndex(t => t.text.content === e.name)
+            namedEntities[index] = e.category
+        })
         return (
             <tr>
-                <td>
-                    lorem ipsum
-                </td>
+                <td><b>Apache Name Finder</b></td>
+                {namedEntities.map((e, i) => (
+                    <td>{e}</td>
+                ))}
             </tr>
         )
     },
