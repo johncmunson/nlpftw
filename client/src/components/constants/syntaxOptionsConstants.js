@@ -40,7 +40,6 @@ const options = [
             {
                 name: 'Lemma',
                 id: '29',
-                disabled: true
             }, {
                 name: 'Stem',
                 id: '30',

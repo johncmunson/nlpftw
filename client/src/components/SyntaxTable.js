@@ -96,9 +96,15 @@ const renderRow = {
     29: function(analysis) {
         return (
             <tr>
-                <td>
-                    lorem ipsum
-                </td>
+                <td><b>Lemma</b></td>
+                {analysis.google.data[1].tokens.map((t, i) => (
+                    <td key={i}>
+                        {t.lemma === analysis.google.data[1].tokens[i].text.content ?
+                            t.lemma :
+                            <b>{t.lemma}</b>
+                        }
+                    </td>
+                ))}
             </tr>
         )
     },
