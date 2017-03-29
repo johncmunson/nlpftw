@@ -6,10 +6,13 @@ const options = [
                 name: 'Snip Sentence',
                 id: '23',
                 disabled: true
-            }, {
-                name: 'Show Tokens',
-                id: '24'
-            }, {
+            },
+            // {
+            //     name: 'Show Tokens',
+            //     id: '24',
+            //     disabled: true
+            // }, 
+            {
                 name: 'Part-of-Speech',
                 id: '25'
             }, {
