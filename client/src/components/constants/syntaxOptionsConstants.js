@@ -29,6 +29,9 @@ const options = [
                 name: 'Propositions',
                 id: '28',
                 disabled: true
+            }, {
+                name: 'Plurality',
+                id: '280'
             }
         ]
     }, {

@@ -81,6 +81,17 @@ const renderRow = {
             </tr>
         )
     },
+    // Plurality
+    280: function(analysis) {
+        return (
+            <tr>
+                <td><b>Plurality</b></td>
+                {analysis.google.data[0].tokens.map((t, i) => (
+                    t.tag === 'NOUN' ? <td>{t.number}</td> : <td>-</td>
+                ))}
+            </tr>
+        )
+    },
     // Lemma
     29: function(analysis) {
         return (
