@@ -43,7 +43,7 @@ const renderRow = {
             <tr>
                 <td><b>Verb Tense</b></td>
                 {analysis.google.data[0].tokens.map((t, i) => (
-                    t.tag === 'VERB' ? <td>{t.tense}</td> : <td>-</td>
+                    t.tag === 'VERB' && t.dependencyEdge.label === 'ROOT' ? <td>{t.tense}</td> : <td>-</td>
                 ))}
             </tr>
         )
@@ -113,6 +113,7 @@ const renderRow = {
         )
     },
     // Named Entities
+    // ** currently does not support multi-word entities
     31: function(analysis) {
         const namedEntities = analysis.google.data[1].tokens.map(t => '-')
         analysis.namedEntities.data.results.map(e => {
