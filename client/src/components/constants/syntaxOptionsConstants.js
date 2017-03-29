@@ -11,10 +11,13 @@ const options = [
             //     name: 'Show Tokens',
             //     id: '24',
             //     disabled: true
-            // }, 
+            // },
             {
                 name: 'Part-of-Speech',
                 id: '25'
+            }, {
+                name: 'Verb Tense',
+                id: '250'
             }, {
                 name: 'Shallow Parse Chunker',
                 id: '26',

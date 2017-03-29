@@ -37,6 +37,17 @@ const renderRow = {
             </tr>
         )
     },
+    // Verb Tense
+    250: function(analysis) {
+        return (
+            <tr>
+                <td><b>Verb Tense</b></td>
+                {analysis.google.data[0].tokens.map((t, i) => (
+                    t.tag === 'VERB' ? <td>{t.tense}</td> : <td>-</td>
+                ))}
+            </tr>
+        )
+    },
     // Shallow Parse Chunker
     26: function(analysis) {
         return (
