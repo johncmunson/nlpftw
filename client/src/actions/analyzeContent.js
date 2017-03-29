@@ -18,25 +18,17 @@ function fetchNamedEntities(content) {
     })
 }
 
-function fetchGithubAnalysis() {
-    return axios({
-        method: 'get',
-        url: `https://api.github.com/users/codeheaven-io`
-    })
-}
-
 export default function analyzeContent(content) {
     return function(dispatch) {
         dispatch(requestingAnalysis())
         // Make requests concurrently
         axios.all([
             fetchGoogleAnalysis(content),
-            fetchNamedEntities(content),
-            fetchGithubAnalysis()
+            fetchNamedEntities(content)
         ])
             // All requests are now complete
-            .then(axios.spread(function(google, namedEntities, github) {
-                dispatch(receiveAnalysis(google, namedEntities, github))
+            .then(axios.spread(function(google, namedEntities) {
+                dispatch(receiveAnalysis(google, namedEntities))
             }))
             .catch(err => dispatch(analysisError(err)))
     }
