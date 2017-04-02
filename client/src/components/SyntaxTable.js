@@ -12,6 +12,8 @@ const renderRow = {
         )
     },
     // Show Tokens
+    // ** the corresponding checkbox is currently hidden
+    // ** and set to active in the reducer
     24: function(analysis) {
         return (
             <tr>
@@ -119,18 +121,62 @@ const renderRow = {
         )
     },
     // Named Entities
-    // ** currently does not support multi-word entities
-    31: function(analysis) {
-        const namedEntities = analysis.google.data[1].tokens.map(t => '-')
-        analysis.namedEntities.data.results.map(e => {
+    // ** bug: this function does not work well when there are
+    // ** multiple people with the same name
+    31: function(analysis, noTally = '-') {
+        // The results array is formatted like...
+        // {name: 'John Munson', category: 'person'}
+        // However, we need the data formatted like...
+        // {name: 'John', category: 'person'}, {name: 'Munson', category: 'person'}
+        const formattedResults = analysis.namedEntities.data.results
+            // The data returned from the backend includes punctuation next to entities.
+            // For example... {name: 'Munson.', category: 'person'}
+            // The replace method is being used to trim off any punctuation.
+            .map(e => e.name.split(' ').map(w => ({name: w.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/, ''), category: e.category})))
+            // The reduce method is being used to flatten the multi-dimensional array.
+            .reduce((acc, cur) => acc.concat(cur), [])
+        // Create the entities array, which will initially be filled with placeholders
+        const entities = analysis.google.data[1].tokens.map(t => noTally)
+        // For each result, change the correct placeholder in the
+        // entities array to the result category
+        formattedResults.map(e => {
             const index = analysis.google.data[1].tokens.findIndex(t => t.text.content === e.name)
-            namedEntities[index] = e.category
+            entities[index] = e.category
+            return true
         })
+        // Loop through the entities array and count the times each value repeats consecutively.
+        // Skip the noTally dashes.
+        console.log(entities)
+        let entitiesByCount = []
+        let currentValue
+        let count = 1
+        for (let i = 0; i < entities.length; i++) {
+            if (entities[i] === currentValue) {
+                if (entities[i] !== noTally) {
+                    count++
+                }
+                if (entities[i] === noTally) {
+                    entitiesByCount.push({value: noTally, columns: 1})
+                }
+                if (i === entities.length - 1) {
+                    entitiesByCount.push({value: currentValue, columns: count})
+                }
+            } else {
+                if (i !== 0) {
+                    entitiesByCount.push({value: currentValue, columns: count})
+                }
+                currentValue = entities[i]
+                count = 1
+                if (i === entities.length - 1) {
+                    entitiesByCount.push({value: currentValue, columns: count})
+                }
+            }
+        }
         return (
             <tr>
                 <td><b>Apache Name Finder</b></td>
-                {namedEntities.map((e, i) => (
-                    <td>{e}</td>
+                {entitiesByCount.map((e, i) => (
+                    <td colSpan={e.columns}>{e.value}</td>
                 ))}
             </tr>
         )
