@@ -1,4 +1,9 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const Sm = styled.span`
+    font-size: 0.8em;
+`
 
 const renderRow = {
     // Snip Sentence
@@ -17,7 +22,7 @@ const renderRow = {
     24: function(analysis) {
         return (
             <tr>
-                <td><b>Tokens</b></td>
+                <td><b>Tokens</b><br/><Sm>(Google)</Sm></td>
                 {analysis.google.data[1].tokens.map((t, i) => (
                     <td key={i}>
                         {t.text.content}
@@ -30,7 +35,7 @@ const renderRow = {
     25: function(analysis) {
         return (
             <tr>
-                <td><b>Part-Of-Speech</b></td>
+                <td><b>Part-Of-Speech</b><br/><Sm>(Google)</Sm></td>
                 {analysis.google.data[1].tokens.map((t, i) => (
                     <td key={i}>
                         {t.partOfSpeech.tag}
@@ -40,12 +45,21 @@ const renderRow = {
         )
     },
     // Verb Tense
+    // ** The data returned from Google is sometimes flawed in regards to verb tense.
+    // ** For example, in the sentence "Sarah is running to school", "running" should
+    // ** be flagged with a verb tense of "present". However, no tense is specified at
+    // ** all. Strangely, Google returns the correct data when given the sentence
+    // ** "He is running to school".
     250: function(analysis) {
         return (
             <tr>
-                <td><b>Verb Tense</b></td>
+                <td><b>Verb Tense</b><br/><Sm>(Google)</Sm></td>
                 {analysis.google.data[0].tokens.map((t, i) => (
-                    t.tag === 'VERB' && t.dependencyEdge.label === 'ROOT' ? <td>{t.tense}</td> : <td>-</td>
+                    t.tag === 'VERB' && t.dependencyEdge.label === 'ROOT' ?
+                    <td>{t.tense}</td> :
+                    t.tag === 'VERB' && t.dependencyEdge.label === 'AUX' ?
+                    <td>AUX</td> :
+                    <td>-</td>
                 ))}
             </tr>
         )
@@ -64,7 +78,7 @@ const renderRow = {
     27: function(analysis) {
         return (
             <tr>
-                <td><b>Grammar</b></td>
+                <td><b>Grammar</b><br/><Sm>(Google)</Sm></td>
                 {analysis.google.data[0].tokens.map((t, i) => (
                     <td key={i}>
                         {t.dependencyEdge.label}
@@ -84,12 +98,47 @@ const renderRow = {
         )
     },
     // Plurality
-    280: function(analysis) {
+    // ** Google sometimes thinks a noun is singular when it is actually plural.
+    // ** For example, penguins in the sentence "He is mad at the penguins" is
+    // ** flagged as singular.
+    280: function(analysis, noTally = '-') {
+        let pluralities = analysis.google.data[0].tokens.map(t => {
+            if (t.tag === 'NOUN') {
+                return t.number
+            } else {
+                return '-'
+            }
+        })
+        let pluralitiesByCount = []
+        let currentValue
+        let count = 1
+        for (let i = 0; i < pluralities.length; i++) {
+            if (pluralities[i] === currentValue) {
+                if (pluralities[i] !== noTally) {
+                    count++
+                }
+                if (pluralities[i] === noTally) {
+                    pluralitiesByCount.push({value: noTally, columns: 1})
+                }
+                if (i === pluralities.length - 1) {
+                    pluralitiesByCount.push({value: currentValue, columns: count})
+                }
+            } else {
+                if (i !== 0) {
+                    pluralitiesByCount.push({value: currentValue, columns: count})
+                }
+                currentValue = pluralities[i]
+                count = 1
+                if (i === pluralities.length - 1) {
+                    pluralitiesByCount.push({value: currentValue, columns: count})
+                }
+            }
+        }
         return (
             <tr>
-                <td><b>Plurality</b></td>
-                {analysis.google.data[0].tokens.map((t, i) => (
-                    t.tag === 'NOUN' ? <td>{t.number}</td> : <td>-</td>
+                <td><b>Plurality</b><br/><Sm>(Google)</Sm></td>
+                {pluralitiesByCount.map((p, i) => (
+                    <td colSpan={p.columns}>{p.value}</td>
                 ))}
             </tr>
         )
@@ -98,7 +147,7 @@ const renderRow = {
     29: function(analysis) {
         return (
             <tr>
-                <td><b>Lemma</b></td>
+                <td><b>Lemma</b><br/><Sm>(Google)</Sm></td>
                 {analysis.google.data[1].tokens.map((t, i) => (
                     <td key={i}>
                         {t.lemma === analysis.google.data[1].tokens[i].text.content ?
@@ -146,7 +195,6 @@ const renderRow = {
         })
         // Loop through the entities array and count the times each value repeats consecutively.
         // Skip the noTally dashes.
-        console.log(entities)
         let entitiesByCount = []
         let currentValue
         let count = 1
@@ -174,7 +222,7 @@ const renderRow = {
         }
         return (
             <tr>
-                <td><b>Apache Name Finder</b></td>
+                <td><b>Name Finder</b><br/><Sm>(Apache)</Sm></td>
                 {entitiesByCount.map((e, i) => (
                     <td colSpan={e.columns}>{e.value}</td>
                 ))}
@@ -198,6 +246,53 @@ const renderRow = {
                 <td>
                     lorem ipsum
                 </td>
+            </tr>
+        )
+    },
+    // Genders
+    // ** The data returned from the backend seems to incorrectly
+    // ** flag some nouns as having 'indeterminate' gender when
+    // ** the gender should be null.
+    330: function(analysis, noTally = '-') {
+        let genders = analysis.genders.data.genders
+        genders = genders.map(g => {
+            if (g && g !== 'indeterminate') {
+                return g
+            } else {
+                return '-'
+            }
+        })
+        let gendersByCount = []
+        let currentValue
+        let count = 1
+        for (let i = 0; i < genders.length; i++) {
+            if (genders[i] === currentValue) {
+                if (genders[i] !== noTally) {
+                    count++
+                }
+                if (genders[i] === noTally) {
+                    gendersByCount.push({value: noTally, columns: 1})
+                }
+                if (i === genders.length - 1) {
+                    gendersByCount.push({value: currentValue, columns: count})
+                }
+            } else {
+                if (i !== 0) {
+                    gendersByCount.push({value: currentValue, columns: count})
+                }
+                currentValue = genders[i]
+                count = 1
+                if (i === genders.length - 1) {
+                    gendersByCount.push({value: currentValue, columns: count})
+                }
+            }
+        }
+        return (
+            <tr>
+                <td><b>Genders</b><br/><Sm>(Apache)</Sm></td>
+                {gendersByCount.map((g, i) => (
+                    <td colSpan={g.columns}>{g.value}</td>
+                ))}
             </tr>
         )
     },
@@ -273,6 +368,7 @@ const renderRow = {
             </tr>
         )
     },
+    // 2-Gram
     42: function(analysis) {
         return (
             <tr>
@@ -321,17 +417,38 @@ const renderRow = {
 }
 
 const SyntaxTable = (props) => (
-    <table>
-        <tbody>
-            {props.analysis.google ? (
-                props.activeSyntaxOptions.map(id => (
-                    renderRow[id](props.analysis)
-                ))
-            ) : (
-                null
-            )}
-        </tbody>
-    </table>
+    <div>
+        <table>
+            <tbody>
+                {props.analysis.google ? (
+                    props.activeSyntaxOptions.map(id => {
+                        if (id < 42 || id > 100) {
+                            return renderRow[id](props.analysis)
+                        } else {
+                            return null
+                        }
+                    })
+                ) : (
+                    null
+                )}
+            </tbody>
+        </table>
+        <table>
+            <tbody>
+                {props.analysis.google ? (
+                    props.activeSyntaxOptions.map(id => {
+                        if (id >= 42 && id <= 100) {
+                            return renderRow[id](props.analysis)
+                        } else {
+                            return null
+                        }
+                    })
+                ) : (
+                    null
+                )}
+            </tbody>
+        </table>
+    </div>
 )
 
 export default SyntaxTable

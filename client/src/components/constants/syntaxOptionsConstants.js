@@ -55,6 +55,9 @@ const options = [
                 name: 'Coreference',
                 id: '33',
                 disabled: true
+            }, {
+                name: 'Genders',
+                id: '330',
             }
         ]
     }, {
@@ -100,15 +103,12 @@ const options = [
             {
                 name: '2-Gram',
                 id: '42',
-                disabled: true
             }, {
                 name: '3-Gram',
                 id: '43',
-                disabled: true
             }, {
                 name: '4-Gram',
                 id: '44',
-                disabled: true
             }, {
                 name: '5-Gram',
                 id: '45',

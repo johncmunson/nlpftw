@@ -18,17 +18,25 @@ function fetchNamedEntities(content) {
     })
 }
 
+function fetchGenders(content) {
+    return axios({
+        method: 'get',
+        url: `http://www.langbench.com:8080/GenderService/?text=${content}&lang=eng&format=linear`,
+    })
+}
+
 export default function analyzeContent(content) {
     return function(dispatch) {
         dispatch(requestingAnalysis())
         // Make requests concurrently
         axios.all([
             fetchGoogleAnalysis(content),
-            fetchNamedEntities(content)
+            fetchNamedEntities(content),
+            fetchGenders(content)
         ])
             // All requests are now complete
-            .then(axios.spread(function(google, namedEntities) {
-                dispatch(receiveAnalysis(google, namedEntities))
+            .then(axios.spread(function(google, namedEntities, genders) {
+                dispatch(receiveAnalysis(google, namedEntities, genders))
             }))
             .catch(err => dispatch(analysisError(err)))
     }
