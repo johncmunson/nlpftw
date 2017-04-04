@@ -4,7 +4,8 @@ export default function analysisReducer(state = {}, action) {
             return {
                 google: action.google,
                 namedEntities: action.namedEntities,
-                genders: action.genders
+                genders: action.genders,
+                grams: action.grams
             }
         }
         case 'ANALYSIS_ERROR':

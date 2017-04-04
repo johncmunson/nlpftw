@@ -25,6 +25,46 @@ function fetchGenders(content) {
     })
 }
 
+function fetch2Grams(content) {
+    return axios({
+        method: 'get',
+        url: `http://www.langbench.com:8080/LegendaryService/1/TupleService/?text=${content}&N=2`
+    })
+}
+
+function fetch3Grams(content) {
+    return axios({
+        method: 'get',
+        url: `http://www.langbench.com:8080/LegendaryService/1/TupleService/?text=${content}&N=3`
+    })
+}
+
+function fetch4Grams(content) {
+    return axios({
+        method: 'get',
+        url: `http://www.langbench.com:8080/LegendaryService/1/TupleService/?text=${content}&N=4`
+    })
+}
+
+function fetch5Grams(content) {
+    return axios({
+        method: 'get',
+        url: `http://www.langbench.com:8080/LegendaryService/1/TupleService/?text=${content}&N=5`
+    })
+}
+
+function fetchGrams(content) {
+    return axios.all([
+        fetch2Grams(content),
+        fetch3Grams(content),
+        fetch4Grams(content),
+        fetch5Grams(content)
+    ])
+        .then(axios.spread(function(twoGrams, threeGrams, fourGrams, fiveGrams) {
+            return {twoGrams, threeGrams, fourGrams, fiveGrams}
+        }))
+}
+
 export default function analyzeContent(content) {
     return function(dispatch) {
         dispatch(requestingAnalysis())
@@ -32,11 +72,12 @@ export default function analyzeContent(content) {
         axios.all([
             fetchGoogleAnalysis(content),
             fetchNamedEntities(content),
-            fetchGenders(content)
+            fetchGenders(content),
+            fetchGrams(content)
         ])
             // All requests are now complete
-            .then(axios.spread(function(google, namedEntities, genders) {
-                dispatch(receiveAnalysis(google, namedEntities, genders))
+            .then(axios.spread(function(google, namedEntities, genders, grams) {
+                dispatch(receiveAnalysis(google, namedEntities, genders, grams))
             }))
             .catch(err => dispatch(analysisError(err)))
     }

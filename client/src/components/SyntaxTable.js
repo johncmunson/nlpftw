@@ -45,11 +45,11 @@ const renderRow = {
         )
     },
     // Verb Tense
-    // ** The data returned from Google is sometimes flawed in regards to verb tense.
-    // ** For example, in the sentence "Sarah is running to school", "running" should
-    // ** be flagged with a verb tense of "present". However, no tense is specified at
-    // ** all. Strangely, Google returns the correct data when given the sentence
-    // ** "He is running to school".
+    // ** Google does not handle FUTURE tense. For example, "will", "shall",
+    // ** "he'll", "they'll", "shan't", is/are/am combined with "going to", etc.
+    // ** Also, I'm not yet sure how Google handles the past-, present-, and
+    // ** future-progressive verb tenses, as well as the perfect tenses and the
+    // ** perfect-progressive tenses.
     250: function(analysis) {
         return (
             <tr>
@@ -367,88 +367,21 @@ const renderRow = {
                 </td>
             </tr>
         )
-    },
-    // 2-Gram
-    42: function(analysis) {
-        return (
-            <tr>
-                <td>
-                    lorem ipsum
-                </td>
-            </tr>
-        )
-    },
-    43: function(analysis) {
-        return (
-            <tr>
-                <td>
-                    lorem ipsum
-                </td>
-            </tr>
-        )
-    },
-    44: function(analysis) {
-        return (
-            <tr>
-                <td>
-                    lorem ipsum
-                </td>
-            </tr>
-        )
-    },
-    45: function(analysis) {
-        return (
-            <tr>
-                <td>
-                    lorem ipsum
-                </td>
-            </tr>
-        )
-    },
-    46: function(analysis) {
-        return (
-            <tr>
-                <td>
-                    lorem ipsum
-                </td>
-            </tr>
-        )
     }
 }
 
 const SyntaxTable = (props) => (
-    <div>
-        <table>
-            <tbody>
-                {props.analysis.google ? (
-                    props.activeSyntaxOptions.map(id => {
-                        if (id < 42 || id > 100) {
-                            return renderRow[id](props.analysis)
-                        } else {
-                            return null
-                        }
-                    })
-                ) : (
-                    null
-                )}
-            </tbody>
-        </table>
-        <table>
-            <tbody>
-                {props.analysis.google ? (
-                    props.activeSyntaxOptions.map(id => {
-                        if (id >= 42 && id <= 100) {
-                            return renderRow[id](props.analysis)
-                        } else {
-                            return null
-                        }
-                    })
-                ) : (
-                    null
-                )}
-            </tbody>
-        </table>
-    </div>
+    <table>
+        <tbody>
+            {props.analysis.google ? (
+                props.activeSyntaxOptions.map(id => {
+                    return renderRow[id](props.analysis)
+                })
+            ) : (
+                null
+            )}
+        </tbody>
+    </table>
 )
 
 export default SyntaxTable
