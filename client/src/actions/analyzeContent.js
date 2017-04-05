@@ -18,12 +18,12 @@ function fetchNamedEntities(content) {
     })
 }
 
-function fetchGenders(content) {
-    return axios({
-        method: 'get',
-        url: `http://www.langbench.com:8080/GenderService/?text=${content}&lang=eng&format=linear`,
-    })
-}
+// function fetchGenders(content) {
+//     return axios({
+//         method: 'get',
+//         url: `http://www.langbench.com:8080/GenderService/?text=${content}&lang=eng&format=linear`,
+//     })
+// }
 
 function fetch2Grams(content) {
     return axios({
@@ -72,12 +72,12 @@ export default function analyzeContent(content) {
         axios.all([
             fetchGoogleAnalysis(content),
             fetchNamedEntities(content),
-            fetchGenders(content),
+            // fetchGenders(content),
             fetchGrams(content)
         ])
             // All requests are now complete
-            .then(axios.spread(function(google, namedEntities, genders, grams) {
-                dispatch(receiveAnalysis(google, namedEntities, genders, grams))
+            .then(axios.spread(function(google, namedEntities, grams) {
+                dispatch(receiveAnalysis(google, namedEntities, grams))
             }))
             .catch(err => dispatch(analysisError(err)))
     }
