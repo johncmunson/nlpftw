@@ -14,9 +14,6 @@ const options = [
             }, {
                 name: '5-Gram',
                 id: '45'
-            }, {
-                name: 'Hyper2-Gram',
-                id: '46'
             }
         ]
     }

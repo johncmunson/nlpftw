@@ -6,7 +6,7 @@ import ConnectedParaphraseOptions from '../containers/ConnectedParaphraseOptions
 export default function tabsReducer(state = [
     {name: 'Syntax/Semantics', id: '2fd4g8', component: ConnectedSyntaxOptions},
     {name: 'N-Grams', id: '98uDF4', component: ConnectedGramOptions},
-    {name: 'Pragmatics/Intent', id: 'ds89wl', component: ConnectedPragmaticOptions},
+    {name: 'Pragmatics', id: 'ds89wl', component: ConnectedPragmaticOptions},
     {name: 'Paraphrase', id: 'iw984u', component: ConnectedParaphraseOptions}
 ], action) {
     switch (action.type) {

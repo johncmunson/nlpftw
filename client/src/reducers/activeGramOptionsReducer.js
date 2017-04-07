@@ -1,4 +1,4 @@
-export default function activeGramOptionsReducer(state = [], action) {
+export default function activeGramOptionsReducer(state = ['42', '43', '44', '45'], action) {
     switch (action.type) {
         case 'UPDATE_ACTIVE_GRAM_OPTIONS': {
             const newState = [...state]

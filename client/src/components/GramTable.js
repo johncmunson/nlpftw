@@ -109,16 +109,6 @@ const renderRow = {
                 </tr>
             </div>
         )
-    },
-    // Hyper2-Gram
-    46: function(analysis) {
-        return (
-            <tr>
-                <Td>
-                    lorem ipsum
-                </Td>
-            </tr>
-        )
     }
 }
 

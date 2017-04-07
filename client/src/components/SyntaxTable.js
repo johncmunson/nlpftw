@@ -74,7 +74,7 @@ const renderRow = {
             </tr>
         )
     },
-    // Grammar/Dependency Parse
+    // Grammar Parse
     27: function(analysis) {
         return (
             <tr>
@@ -87,21 +87,11 @@ const renderRow = {
             </tr>
         )
     },
-    // Propositions
-    28: function(analysis) {
-        return (
-            <tr>
-                <td>
-                    lorem ipsum
-                </td>
-            </tr>
-        )
-    },
     // Plurality
     // ** Google sometimes thinks a noun is singular when it is actually plural.
     // ** For example, penguins in the sentence "He is mad at the penguins" is
     // ** flagged as singular.
-    280: function(analysis, noTally = '-') {
+    28: function(analysis, noTally = '-') {
         let pluralities = analysis.google.data[0].tokens.map(t => {
             if (t.tag === 'NOUN') {
                 return t.number

@@ -23,15 +23,11 @@ const options = [
                 id: '26',
                 disabled: true
             }, {
-                name: 'Grammar/Dependency Parse',
+                name: 'Grammar Parse',
                 id: '27'
             }, {
-                name: 'Propositions',
-                id: '28',
-                disabled: true
-            }, {
                 name: 'Plurality',
-                id: '280'
+                id: '28'
             }
         ]
     }, {
@@ -47,6 +43,7 @@ const options = [
             }, {
                 name: 'Named Entities',
                 id: '31',
+                disabled: true
             }, {
                 name: 'Quantities',
                 id: '32',

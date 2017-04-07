@@ -11,19 +11,19 @@ function fetchGoogleAnalysis(content) {
     })
 }
 
-function fetchNamedEntities(content) {
-    return axios({
-        method: 'get',
-        url: `http://www.langbench.com:8080/Apache/1.7.2/NounDetect?action=locate&text=${content}`,
-    })
-}
-
-// function fetchGenders(content) {
+// function fetchNamedEntities(content) {
 //     return axios({
 //         method: 'get',
-//         url: `http://www.langbench.com:8080/GenderService/?text=${content}&lang=eng&format=linear`,
+//         url: `http://www.langbench.com:8080/Apache/1.7.2/NounDetect?action=locate&text=${content}`,
 //     })
 // }
+
+function fetchGenders(content) {
+    return axios({
+        method: 'get',
+        url: `http://www.langbench.com:8080/GenderService/?text=${content}&lang=eng&format=linear`,
+    })
+}
 
 function fetch2Grams(content) {
     return axios({
@@ -71,13 +71,13 @@ export default function analyzeContent(content) {
         // Make requests concurrently
         axios.all([
             fetchGoogleAnalysis(content),
-            fetchNamedEntities(content),
-            // fetchGenders(content),
+            // fetchNamedEntities(content),
+            fetchGenders(content),
             fetchGrams(content)
         ])
             // All requests are now complete
-            .then(axios.spread(function(google, namedEntities, grams) {
-                dispatch(receiveAnalysis(google, namedEntities, grams))
+            .then(axios.spread(function(google, genders, grams) {
+                dispatch(receiveAnalysis(google, genders, grams))
             }))
             .catch(err => dispatch(analysisError(err)))
     }
