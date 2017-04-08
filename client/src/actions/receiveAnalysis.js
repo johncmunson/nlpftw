@@ -1,9 +1,9 @@
-export default function receiveAnalysis(google, genders, grams) {
+export default function receiveAnalysis(google, grams) {
     return {
         type: 'RECEIVE_ANALYSIS',
         google,
         // namedEntities,
-        genders,
+        // genders,
         grams
     }
 }
