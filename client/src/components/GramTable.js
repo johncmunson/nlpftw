@@ -17,7 +17,7 @@ const renderRow = {
             <div>
                 <tr>
                     <Td><b>2-Gram</b></Td>
-                    {analysis.grams.twoGrams.data.results.map((g, i) => (
+                    {analysis.twoGrams.data.results.map((g, i) => (
                         <Td key={i}>
                             {g.tokens.map((t, i) => (
                                 i + 1 === g.tokens.length || g.tokens[i + 1].search(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/) > -1 ? t : t + ' '
@@ -27,7 +27,7 @@ const renderRow = {
                 </tr>
                 <tr>
                     <Td>Likelihood</Td>
-                    {analysis.grams.twoGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
+                    {analysis.twoGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
                 </tr>
             </div>
         )
@@ -39,7 +39,7 @@ const renderRow = {
                 <Spacer />
                 <tr>
                     <Td><b>3-Gram</b></Td>
-                    {analysis.grams.threeGrams.data.results.map((g, i) => (
+                    {analysis.threeGrams.data.results.map((g, i) => (
                         <Td key={i}>
                             {g.tokens.map((t, i) => (
                                 i + 1 === g.tokens.length || g.tokens[i + 1].search(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/) > -1 ? t : t + ' '
@@ -50,7 +50,7 @@ const renderRow = {
                 </tr>
                 <tr>
                     <Td>Likelihood</Td>
-                    {analysis.grams.threeGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
+                    {analysis.threeGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
                     <Td></Td>
                 </tr>
             </div>
@@ -63,7 +63,7 @@ const renderRow = {
                 <Spacer />
                 <tr>
                     <Td><b>4-Gram</b></Td>
-                    {analysis.grams.fourGrams.data.results.map((g, i) => (
+                    {analysis.fourGrams.data.results.map((g, i) => (
                         <Td key={i}>
                             {g.tokens.map((t, i) => (
                                 i + 1 === g.tokens.length || g.tokens[i + 1].search(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/) > -1 ? t : t + ' '
@@ -75,7 +75,7 @@ const renderRow = {
                 </tr>
                 <tr>
                     <Td>Likelihood</Td>
-                    {analysis.grams.fourGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
+                    {analysis.fourGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
                     <Td></Td>
                     <Td></Td>
                 </tr>
@@ -89,7 +89,7 @@ const renderRow = {
                 <Spacer />
                 <tr>
                     <Td><b>5-Gram</b></Td>
-                    {analysis.grams.fiveGrams.data.results.map((g, i) => (
+                    {analysis.fiveGrams.data.results.map((g, i) => (
                         <Td key={i}>
                             {g.tokens.map((t, i) => (
                                 i + 1 === g.tokens.length || g.tokens[i + 1].search(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/) > -1 ? t : t + ' '
@@ -98,14 +98,14 @@ const renderRow = {
                     ))}
                     <Td></Td>
                     <Td></Td>
-                    {analysis.grams.twoGrams.data.results.length === 2 ? null : <Td></Td>}
+                    {analysis.twoGrams.data.results.length === 2 ? null : <Td></Td>}
                 </tr>
                 <tr>
                     <Td>Likelihood</Td>
-                    {analysis.grams.fiveGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
+                    {analysis.fiveGrams.data.results.map((g, i) => <Td key={i}>{g.percentage === '-1' ? '-' : Math.floor(Number(g.percentage) * 1000000) + '%'}</Td>)}
                     <Td></Td>
                     <Td></Td>
-                    {analysis.grams.twoGrams.data.results.length === 2 ? null : <Td></Td>}
+                    {analysis.twoGrams.data.results.length === 2 ? null : <Td></Td>}
                 </tr>
             </div>
         )
@@ -115,9 +115,9 @@ const renderRow = {
 const GramTable = (props) => (
     <table>
         <tbody>
-            {props.analysis.google ? (
+            {props.grams.twoGrams ? (
                 props.activeGramOptions.map(id => {
-                    return renderRow[id](props.analysis)
+                    return renderRow[id](props.grams)
                 })
             ) : (
                 null

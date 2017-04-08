@@ -186,7 +186,7 @@ const renderRow = {
 const ParaphraseTable = (props) => (
     <table>
         <tbody>
-            {props.analysis.google ? (
+            {props.google ? (
                 props.activeParaphraseOptions.map(id => (
                     renderRow[id](props.analysis)
                 ))

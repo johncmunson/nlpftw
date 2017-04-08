@@ -163,61 +163,70 @@ const renderRow = {
     // ** bug: this function does not work well when there are
     // ** multiple people with the same name
     31: function(analysis, noTally = '-') {
-        // The results array is formatted like...
-        // {name: 'John Munson', category: 'person'}
-        // However, we need the data formatted like...
-        // {name: 'John', category: 'person'}, {name: 'Munson', category: 'person'}
-        const formattedResults = analysis.namedEntities.data.results
-            // The data returned from the backend includes punctuation next to entities.
-            // For example... {name: 'Munson.', category: 'person'}
-            // The replace method is being used to trim off any punctuation.
-            .map(e => e.name.split(' ').map(w => ({name: w.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/, ''), category: e.category})))
-            // The reduce method is being used to flatten the multi-dimensional array.
-            .reduce((acc, cur) => acc.concat(cur), [])
-        // Create the entities array, which will initially be filled with placeholders
-        const entities = analysis.google.data[1].tokens.map(t => noTally)
-        // For each result, change the correct placeholder in the
-        // entities array to the result category
-        formattedResults.map(e => {
-            const index = analysis.google.data[1].tokens.findIndex(t => t.text.content === e.name)
-            entities[index] = e.category
-            return true
-        })
-        // Loop through the entities array and count the times each value repeats consecutively.
-        // Skip the noTally dashes.
-        let entitiesByCount = []
-        let currentValue
-        let count = 1
-        for (let i = 0; i < entities.length; i++) {
-            if (entities[i] === currentValue) {
-                if (entities[i] !== noTally) {
-                    count++
-                }
-                if (entities[i] === noTally) {
-                    entitiesByCount.push({value: noTally, columns: 1})
-                }
-                if (i === entities.length - 1) {
-                    entitiesByCount.push({value: currentValue, columns: count})
-                }
-            } else {
-                if (i !== 0) {
-                    entitiesByCount.push({value: currentValue, columns: count})
-                }
-                currentValue = entities[i]
-                count = 1
-                if (i === entities.length - 1) {
-                    entitiesByCount.push({value: currentValue, columns: count})
+        if (analysis.namedEntities.data) {
+            // The results array is formatted like...
+            // {name: 'John Munson', category: 'person'}
+            // However, we need the data formatted like...
+            // {name: 'John', category: 'person'}, {name: 'Munson', category: 'person'}
+            const formattedResults = analysis.namedEntities.data.results
+                // The data returned from the backend includes punctuation next to entities.
+                // For example... {name: 'Munson.', category: 'person'}
+                // The replace method is being used to trim off any punctuation.
+                .map(e => e.name.split(' ').map(w => ({name: w.replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/, ''), category: e.category})))
+                // The reduce method is being used to flatten the multi-dimensional array.
+                .reduce((acc, cur) => acc.concat(cur), [])
+            // Create the entities array, which will initially be filled with placeholders
+            const entities = analysis.google.data[1].tokens.map(t => noTally)
+            // For each result, change the correct placeholder in the
+            // entities array to the result category
+            formattedResults.map(e => {
+                const index = analysis.google.data[1].tokens.findIndex(t => t.text.content === e.name)
+                entities[index] = e.category
+                return true
+            })
+            // Loop through the entities array and count the times each value repeats consecutively.
+            // Skip the noTally dashes.
+            let entitiesByCount = []
+            let currentValue
+            let count = 1
+            for (let i = 0; i < entities.length; i++) {
+                if (entities[i] === currentValue) {
+                    if (entities[i] !== noTally) {
+                        count++
+                    }
+                    if (entities[i] === noTally) {
+                        entitiesByCount.push({value: noTally, columns: 1})
+                    }
+                    if (i === entities.length - 1) {
+                        entitiesByCount.push({value: currentValue, columns: count})
+                    }
+                } else {
+                    if (i !== 0) {
+                        entitiesByCount.push({value: currentValue, columns: count})
+                    }
+                    currentValue = entities[i]
+                    count = 1
+                    if (i === entities.length - 1) {
+                        entitiesByCount.push({value: currentValue, columns: count})
+                    }
                 }
             }
+            return (
+                <tr>
+                    <td><b>Name Finder</b><br/><Sm>(Apache)</Sm></td>
+                    {entitiesByCount.map((e, i) => (
+                        <td colSpan={e.columns}>{e.value}</td>
+                    ))}
+                </tr>
+            )
+        } else {
+            return (
+                <tr>
+                    <td><b>Name Finder</b><br/><Sm>(Apache)</Sm></td>
+                    <td>analysing...</td>
+                </tr>
+            )
         }
-        return (
-            <tr>
-                <td><b>Name Finder</b><br/><Sm>(Apache)</Sm></td>
-                {entitiesByCount.map((e, i) => (
-                    <td colSpan={e.columns}>{e.value}</td>
-                ))}
-            </tr>
-        )
     },
     // Quantities
     32: function(analysis) {
@@ -244,47 +253,56 @@ const renderRow = {
     // ** flag some nouns as having 'indeterminate' gender when
     // ** the gender should be null.
     330: function(analysis, noTally = '-') {
-        let genders = analysis.genders.data.genders
-        genders = genders.map(g => {
-            if (g && g !== 'indeterminate') {
-                return g
-            } else {
-                return '-'
+        if (analysis.genders.data) {
+            let genders = analysis.genders.data.genders
+            genders = genders.map(g => {
+                if (g && g !== 'indeterminate') {
+                    return g
+                } else {
+                    return '-'
+                }
+            })
+            let gendersByCount = []
+            let currentValue
+            let count = 1
+            for (let i = 0; i < genders.length; i++) {
+                if (genders[i] === currentValue) {
+                    if (genders[i] !== noTally) {
+                        count++
+                    }
+                    if (genders[i] === noTally) {
+                        gendersByCount.push({value: noTally, columns: 1})
+                    }
+                    if (i === genders.length - 1) {
+                        gendersByCount.push({value: currentValue, columns: count})
+                    }
+                } else {
+                    if (i !== 0) {
+                        gendersByCount.push({value: currentValue, columns: count})
+                    }
+                    currentValue = genders[i]
+                    count = 1
+                    if (i === genders.length - 1) {
+                        gendersByCount.push({value: currentValue, columns: count})
+                    }
+                }
             }
-        })
-        let gendersByCount = []
-        let currentValue
-        let count = 1
-        for (let i = 0; i < genders.length; i++) {
-            if (genders[i] === currentValue) {
-                if (genders[i] !== noTally) {
-                    count++
-                }
-                if (genders[i] === noTally) {
-                    gendersByCount.push({value: noTally, columns: 1})
-                }
-                if (i === genders.length - 1) {
-                    gendersByCount.push({value: currentValue, columns: count})
-                }
-            } else {
-                if (i !== 0) {
-                    gendersByCount.push({value: currentValue, columns: count})
-                }
-                currentValue = genders[i]
-                count = 1
-                if (i === genders.length - 1) {
-                    gendersByCount.push({value: currentValue, columns: count})
-                }
-            }
+            return (
+                <tr>
+                    <td><b>Genders</b><br/><Sm>(Apache)</Sm></td>
+                    {gendersByCount.map((g, i) => (
+                        <td colSpan={g.columns}>{g.value}</td>
+                    ))}
+                </tr>
+            )
+        } else {
+            return (
+                <tr>
+                    <td><b>Genders</b><br/><Sm>(Apache)</Sm></td>
+                    <td>analysing...</td>
+                </tr>
+            )
         }
-        return (
-            <tr>
-                <td><b>Genders</b><br/><Sm>(Apache)</Sm></td>
-                {gendersByCount.map((g, i) => (
-                    <td colSpan={g.columns}>{g.value}</td>
-                ))}
-            </tr>
-        )
     },
     34: function(analysis) {
         return (
@@ -363,9 +381,11 @@ const renderRow = {
 const SyntaxTable = (props) => (
     <table>
         <tbody>
-            {props.analysis.google ? (
+            {props.google.data ? (
                 props.activeSyntaxOptions.map(id => {
-                    return renderRow[id](props.analysis)
+                    return renderRow[id]({
+                        google: props.google
+                    })
                 })
             ) : (
                 null

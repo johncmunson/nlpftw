@@ -24,7 +24,7 @@ const renderRow = {
 const PragmaticTable = (props) => (
     <table>
         <tbody>
-            {props.analysis.google ? (
+            {props.google ? (
                 props.activePragmaticOptions.map(id => (
                     renderRow[id](props.analysis)
                 ))
