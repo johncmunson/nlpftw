@@ -17,11 +17,14 @@ const options = [
             //     disabled: true
             // },
             {
-                name: 'Part-of-Speech',
+                name: 'Google POS',
                 id: '25'
             }, {
-                name: 'Verb Tense',
+                name: 'Stanford POS',
                 id: '250'
+            }, {
+                name: 'Verb Tense',
+                id: '251'
             }, {
                 name: 'Shallow Parse Chunker',
                 id: '26',
@@ -41,8 +44,11 @@ const options = [
         category: 'Word Level',
         options: [
             {
-                name: 'Lemma',
+                name: 'Google Lemma',
                 id: '29',
+            }, {
+                name: 'Stanford Lemma',
+                id: '290'
             }, {
                 name: 'Stem',
                 id: '30',

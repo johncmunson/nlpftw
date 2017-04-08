@@ -62,11 +62,11 @@ const renderRow = {
             )
         }
     },
-    // Part-Of-Speech
+    // Google POS
     25: function(analysis) {
         return (
             <tr>
-                <td><b>Part-Of-Speech</b><br/><Sm>(Google)</Sm></td>
+                <td><b>Part Of Speech</b><br/><Sm>(Google)</Sm></td>
                 {analysis.google.data[1].tokens.map((t, i) => (
                     <td key={i}>
                         {t.partOfSpeech.tag}
@@ -75,13 +75,44 @@ const renderRow = {
             </tr>
         )
     },
+    // Stanford POS
+    250: function(analysis) {
+        if (analysis.stanford.data) {
+            const stanford = analysis.stanford.data
+            let pos = []
+            for (let s = 0; s < stanford.sentences.length; s++) {
+                for (let t = 0; t < stanford.sentences[s].tokens.length; t++) {
+                    pos.push(stanford.sentences[s].tokens[t].pos)
+                }
+            }
+            return (
+                <tr>
+                    <td><b>Part Of Speech</b><br/><Sm>(Stanford)</Sm></td>
+                    {pos.map((p, i) => (
+                        <td key={i}>
+                            {p}
+                        </td>
+                    ))}
+                </tr>
+            )
+        } else {
+            return (
+                <tr>
+                    <td><b>Part Of Speech</b><br/><Sm>(Stanford)</Sm></td>
+                    <td colSpan={analysis.google.data[1].tokens.length.toString()}>
+                        analyzing...
+                    </td>
+                </tr>
+            )
+        }
+    },
     // Verb Tense
     // ** Google does not handle FUTURE tense. For example, "will", "shall",
     // ** "he'll", "they'll", "shan't", is/are/am combined with "going to", etc.
     // ** Also, I'm not yet sure how Google handles the past-, present-, and
     // ** future-progressive verb tenses, as well as the perfect tenses and the
     // ** perfect-progressive tenses.
-    250: function(analysis) {
+    251: function(analysis) {
         return (
             <tr>
                 <td><b>Verb Tense</b><br/><Sm>(Google)</Sm></td>
@@ -127,7 +158,7 @@ const renderRow = {
                 for (let d = 0; d < stanford.sentences[s].basicDependencies.length; d++) {
                     grammar.push({
                         grammar: stanford.sentences[s].basicDependencies[d].dep,
-                        index: stanford.sentences[s].basicDependencies[d].dependent - 1
+                        index: stanford.sentences[s].basicDependencies[d].dependent + (s * 100)
                     })
                 }
             }
@@ -199,7 +230,7 @@ const renderRow = {
             </tr>
         )
     },
-    // Lemma
+    // Google Lemma
     29: function(analysis) {
         return (
             <tr>
@@ -214,6 +245,43 @@ const renderRow = {
                 ))}
             </tr>
         )
+    },
+    // Stanford Lemma
+    290: function(analysis) {
+        if (analysis.stanford.data) {
+            const stanford = analysis.stanford.data
+            let lemma = []
+            for (let s = 0; s < stanford.sentences.length; s++) {
+                for (let t = 0; t < stanford.sentences[s].tokens.length; t++) {
+                    lemma.push({
+                        lemma: stanford.sentences[s].tokens[t].lemma.toLowerCase(),
+                        token: stanford.sentences[s].tokens[t].originalText.toLowerCase()
+                    })
+                }
+            }
+            return (
+                <tr>
+                    <td><b>Lemma</b><br/><Sm>(Stanford)</Sm></td>
+                    {lemma.map((l, i) => (
+                        <td key={i}>
+                            {l.lemma === l.token ?
+                                l.lemma :
+                                <b>{l.lemma}</b>
+                            }
+                        </td>
+                    ))}
+                </tr>
+            )
+        } else {
+            return (
+                <tr>
+                    <td><b>Lemma</b><br/><Sm>(Stanford)</Sm></td>
+                    <td colSpan={analysis.google.data[1].tokens.length.toString()}>
+                        analyzing...
+                    </td>
+                </tr>
+            )
+        }
     },
     // Stem
     30: function(analysis) {
