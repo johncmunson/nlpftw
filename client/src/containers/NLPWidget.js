@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import SyntaxTable from '../components/SyntaxTable.js'
-import GramTable from '../components/GramTable.js'
-import PragmaticTable from '../components/PragmaticTable.js'
-import ParaphraseTable from '../components/ParaphraseTable.js'
+// import SyntaxTable from '../components/SyntaxTable.js'
+// import GramTable from '../components/GramTable.js'
+// import PragmaticTable from '../components/PragmaticTable.js'
+// import ParaphraseTable from '../components/ParaphraseTable.js'
 import NLPInput from '../components/NLPInput.js'
 import Tabs from '../components/Tabs.js'
 import analyzeContent from '../actions/analyzeContent.js'
@@ -19,11 +19,7 @@ class NLPWidget extends React.Component {
                     activeTabId={this.props.activeTabId}
                     handleTabClick={this.props.handleTabClick}
                 />
-                {this.props.requestingAnalysis ? 'requesting analysis...' : null}
-                {this.props.activeTabId === '2fd4g8' ? <SyntaxTable {...this.props} /> : null}
-                {this.props.activeTabId === '98uDF4' ? <GramTable {...this.props} /> : null}
-                {this.props.activeTabId === 'ds89wl' ? <PragmaticTable {...this.props} /> : null}
-                {this.props.activeTabId === 'iw984u' ? <ParaphraseTable {...this.props} /> : null}
+
             </div>
         )
     }
@@ -31,10 +27,12 @@ class NLPWidget extends React.Component {
 
 const mapStateToProps = (state) => (
     {
-        analysis: state.analysis,
+        google: state.google,
+        grams: state.grams,
         tabs: state.tabs,
         activeTabId: state.activeTabId,
-        requestingAnalysis: state.requestingAnalysis,
+        requestingGoogle: state.requestingGoogle,
+        requestingGrams: state.requestingGrams,
         activeSyntaxOptions: state.activeSyntaxOptions,
         activeGramOptions: state.activeGramOptions,
         activePragmaticOptions: state.activePragmaticOptions,

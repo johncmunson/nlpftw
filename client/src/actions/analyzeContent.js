@@ -1,14 +1,19 @@
 import axios from 'axios'
-import requestingAnalysis from './requestingAnalysis.js'
-import receiveAnalysis from './receiveAnalysis.js'
-import analysisError from './analysisError.js'
+import requestingGoogle from './requestingGoogle.js'
+import receiveGoogle from './receiveGoogle.js'
+import googleError from './googleError.js'
+import requestingGrams from './requestingGrams.js'
+import receiveGrams from './receiveGrams.js'
+import gramsError from './gramsError.js'
 
-function fetchGoogleAnalysis(content) {
+function fetchGoogle(dispatch, content) {
     return axios({
         method: 'post',
         url: `/api/analyze`,
         data: {content}
     })
+    .then(analysis => dispatch(receiveGoogle(analysis)))
+    .catch(err => dispatch(googleError(err)))
 }
 
 // function fetchNamedEntities(content) {
@@ -53,7 +58,7 @@ function fetch5Grams(content) {
     })
 }
 
-function fetchGrams(content) {
+function fetchGrams(dispatch, content) {
     return axios.all([
         fetch2Grams(content),
         fetch3Grams(content),
@@ -61,24 +66,16 @@ function fetchGrams(content) {
         fetch5Grams(content)
     ])
         .then(axios.spread(function(twoGrams, threeGrams, fourGrams, fiveGrams) {
-            return {twoGrams, threeGrams, fourGrams, fiveGrams}
+            dispatch(receiveGrams({twoGrams, threeGrams, fourGrams, fiveGrams}))
         }))
+        .catch(err => dispatch(gramsError(err)))
 }
 
 export default function analyzeContent(content) {
     return function(dispatch) {
-        dispatch(requestingAnalysis())
-        // Make requests concurrently
-        axios.all([
-            fetchGoogleAnalysis(content),
-            // fetchNamedEntities(content),
-            // fetchGenders(content),
-            fetchGrams(content)
-        ])
-            // All requests are now complete
-            .then(axios.spread(function(google, grams) {
-                dispatch(receiveAnalysis(google, grams))
-            }))
-            .catch(err => dispatch(analysisError(err)))
+        dispatch(requestingGoogle())
+        dispatch(requestingGrams())
+        fetchGoogle(dispatch, content)
+        fetchGrams(dispatch, content)
     }
 }
