@@ -105,7 +105,7 @@ const renderRow = {
             </tr>
         )
     },
-    // Grammar Parse
+    // Google Grammar
     27: function(analysis) {
         return (
             <tr>
@@ -117,6 +117,41 @@ const renderRow = {
                 ))}
             </tr>
         )
+    },
+    // Stanford Grammar
+    270: function(analysis) {
+        if (analysis.stanford.data) {
+            const stanford = analysis.stanford.data
+            let grammar = []
+            for (let s = 0; s < stanford.sentences.length; s++) {
+                for (let d = 0; d < stanford.sentences[s].basicDependencies.length; d++) {
+                    grammar.push({
+                        grammar: stanford.sentences[s].basicDependencies[d].dep,
+                        index: stanford.sentences[s].basicDependencies[d].dependent - 1
+                    })
+                }
+            }
+            grammar = grammar.sort((a, b) => a.index - b.index)
+            return (
+                <tr>
+                    <td><b>Grammar</b><br/><Sm>(Stanford)</Sm></td>
+                    {grammar.map((g, i) => (
+                        <td key={i}>
+                            {g.grammar.toUpperCase()}
+                        </td>
+                    ))}
+                </tr>
+            )
+        } else {
+            return (
+                <tr>
+                    <td><b>Grammar</b><br/><Sm>(Stanford)</Sm></td>
+                    <td colSpan={analysis.google.data[1].tokens.length.toString()}>
+                        analyzing...
+                    </td>
+                </tr>
+            )
+        }
     },
     // Plurality
     // ** Google sometimes thinks a noun is singular when it is actually plural.
@@ -413,12 +448,12 @@ const SyntaxTable = (props) => (
     <table>
         <tbody>
             {props.google.data ? (
-                props.activeSyntaxOptions.map(id => {
-                    return renderRow[id]({
+                props.activeSyntaxOptions.map(id => (
+                    renderRow[id]({
                         google: props.google,
                         stanford: props.stanford
                     })
-                })
+                ))
             ) : (
                 null
             )}

@@ -1,4 +1,4 @@
-export default function activeSyntaxOptionsReducer(state = ['24', '240', '25', '250', '27', '28', '29'], action) {
+export default function activeSyntaxOptionsReducer(state = ['24', '240', '25', '250', '27', '270', '28', '29'], action) {
     switch (action.type) {
         case 'UPDATE_ACTIVE_SYNTAX_OPTIONS': {
             const newState = [...state]

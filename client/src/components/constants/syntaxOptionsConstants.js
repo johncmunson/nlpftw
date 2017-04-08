@@ -27,8 +27,11 @@ const options = [
                 id: '26',
                 disabled: true
             }, {
-                name: 'Grammar Parse',
+                name: 'Google Grammar',
                 id: '27'
+            }, {
+                name: 'Stanford Grammar',
+                id: '270'
             }, {
                 name: 'Plurality',
                 id: '28'
