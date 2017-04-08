@@ -16,7 +16,7 @@ const renderRow = {
             </tr>
         )
     },
-    // Show Tokens
+    // Google Tokens
     // ** the corresponding checkbox is currently hidden
     // ** and set to active in the reducer
     24: function(analysis) {
@@ -30,6 +30,37 @@ const renderRow = {
                 ))}
             </tr>
         )
+    },
+    // Stanford Tokens
+    240: function(analysis) {
+        if (analysis.stanford.data) {
+            const stanford = analysis.stanford.data
+            const tokens = []
+            for (let s = 0; s < stanford.sentences.length; s++) {
+                for (let t = 0; t < stanford.sentences[s].tokens.length; t++) {
+                    tokens.push(stanford.sentences[s].tokens[t].originalText)
+                }
+            }
+            return (
+                <tr>
+                    <td><b>Tokens</b><br/><Sm>(Stanford)</Sm></td>
+                    {tokens.map((t, i) => (
+                        <td key={i}>
+                            {t}
+                        </td>
+                    ))}
+                </tr>
+            )
+        } else {
+            return (
+                <tr>
+                    <td><b>Tokens</b><br/><Sm>(Stanford)</Sm></td>
+                    <td colSpan={analysis.google.data[1].tokens.length.toString()}>
+                        analyzing...
+                    </td>
+                </tr>
+            )
+        }
     },
     // Part-Of-Speech
     25: function(analysis) {
@@ -384,7 +415,8 @@ const SyntaxTable = (props) => (
             {props.google.data ? (
                 props.activeSyntaxOptions.map(id => {
                     return renderRow[id]({
-                        google: props.google
+                        google: props.google,
+                        stanford: props.stanford
                     })
                 })
             ) : (

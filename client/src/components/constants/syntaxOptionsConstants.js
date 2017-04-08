@@ -8,8 +8,12 @@ const options = [
                 disabled: true
             },
             // {
-            //     name: 'Show Tokens',
+            //     name: 'Google Tokens',
             //     id: '24',
+            //     disabled: true
+            // }, {
+            //     name: 'Stanford Tokens',
+            //     id: '240',
             //     disabled: true
             // },
             {

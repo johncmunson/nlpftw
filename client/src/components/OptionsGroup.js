@@ -11,7 +11,7 @@ const OptionsGroup = (props) => (
                 <input
                     onClick={() => props.handleOptionClick(o.id)}
                     type='checkbox'
-                    checked={props.activeOptions.includes(o.id) === true ? 'checked' : null}
+                    defaultChecked={props.activeOptions.includes(o.id) === true ? 'checked' : null}
                     disabled={o.disabled ? 'disabled' : false}
                 />
                 {o.name}

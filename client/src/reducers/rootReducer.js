@@ -5,6 +5,9 @@ import googleErrorReducer from './googleErrorReducer.js'
 import gramsReducer from './gramsReducer.js'
 import requestingGramsReducer from './requestingGramsReducer.js'
 import gramsErrorReducer from './gramsErrorReducer.js'
+import stanfordReducer from './stanfordReducer.js'
+import requestingStanfordReducer from './requestingStanfordReducer.js'
+import stanfordErrorReducer from './stanfordErrorReducer.js'
 import tabsReducer from './tabsReducer.js'
 import activeTabIdReducer from './activeTabIdReducer.js'
 import activeSyntaxOptionsReducer from './activeSyntaxOptionsReducer.js'
@@ -19,6 +22,9 @@ const rootReducer = combineReducers({
     grams: gramsReducer,
     requestingGrams: requestingGramsReducer,
     gramsError: gramsErrorReducer,
+    stanford: stanfordReducer,
+    requestingStanford: requestingStanfordReducer,
+    stanfordError: stanfordErrorReducer,
     tabs: tabsReducer,
     activeTabId: activeTabIdReducer,
     activeSyntaxOptions: activeSyntaxOptionsReducer,

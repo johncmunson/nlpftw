@@ -5,6 +5,9 @@ import googleError from './googleError.js'
 import requestingGrams from './requestingGrams.js'
 import receiveGrams from './receiveGrams.js'
 import gramsError from './gramsError.js'
+import requestingStanford from './requestingStanford.js'
+import receiveStanford from './receiveStanford.js'
+import stanfordError from './stanfordError.js'
 
 function fetchGoogle(dispatch, content) {
     return axios({
@@ -71,11 +74,23 @@ function fetchGrams(dispatch, content) {
         .catch(err => dispatch(gramsError(err)))
 }
 
+function fetchStanford(dispatch, content) {
+    return axios({
+        method: 'post',
+        url: `http://ec2-34-205-204-222.compute-1.amazonaws.com/?properties=%7B"annotators":"tokenize,ssplit,depparse,pos,lemma,ner","outputFormat":"json"%7D`,
+        data: content
+    })
+    .then(analysis => dispatch(receiveStanford(analysis)))
+    .catch(err => dispatch(stanfordError(err)))
+}
+
 export default function analyzeContent(content) {
     return function(dispatch) {
         dispatch(requestingGoogle())
         dispatch(requestingGrams())
+        dispatch(requestingStanford())
         fetchGoogle(dispatch, content)
         fetchGrams(dispatch, content)
+        fetchStanford(dispatch, content)
     }
 }

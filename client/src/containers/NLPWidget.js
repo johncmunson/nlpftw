@@ -32,6 +32,7 @@ const mapStateToProps = (state) => (
     {
         google: state.google,
         grams: state.grams,
+        stanford: state.stanford,
         tabs: state.tabs,
         activeTabId: state.activeTabId,
         requestingGoogle: state.requestingGoogle,
